@@ -23,18 +23,6 @@ fun PictureListScreen(
     val state = viewModel.state.value
 
     Surface(modifier = Modifier.fillMaxSize()) {
-        if (state.pictures.isEmpty() && !state.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "No Pictures")
-            }
-        }
-
-        if (state.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        }
-
         LazyColumn {
             items(state.pictures) { picture ->
                 Box(modifier = Modifier.fillMaxWidth()) {
@@ -67,6 +55,18 @@ fun PictureListScreen(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "Delete Picture"
                         )
+                    }
+                }
+            }
+        }
+
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            if (state.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                if (state.pictures.isEmpty()) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "No Pictures")
                     }
                 }
             }
